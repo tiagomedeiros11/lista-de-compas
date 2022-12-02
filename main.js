@@ -55,11 +55,26 @@ function criaElemento(item) {
   novoItem.appendChild(quantidadeItem);
   novoItem.innerHTML += item.nome
 
+  novoItem.appendChild(botaoDeleta())
+
   lista.appendChild(novoItem)
 }
+function botaoDeleta (){
+  const elementoBotao = document.createElement("button")
+  elementoBotao.innerText = "X"
 
+  elementoBotao.addEventListener("click", function(){
+    deletaElemento(this.parentNode)
+  })
+
+  return elementoBotao
+}
 
 //atualiza a quantidade do item, incrementando o id do data-id, para controlar se o item ja foi adicionado a lista
 function atualizaElemento (item){
 document.querySelector("[data-id='"+item.id+"']").innerHTML =item.quantidade
+}
+
+function deletaElemento (tag){
+  tag.remove()
 }
