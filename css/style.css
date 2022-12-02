@@ -1,7 +1,18 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/fontawesome.min.css');
+
 html {
     background: radial-gradient(farthest-corner at right top,#21A09D, #06182D);
     height: 100%;
     font-family: 'Roboto', cursive;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.titulo{
+    color: white;
 }
 
 .conteudo {
@@ -12,7 +23,6 @@ html {
 }
 
 .principal {
-    flex-grow: 1;
     flex-basis: auto;
     min-width: 600px;
     padding: 4em 2em 2em;
@@ -21,6 +31,7 @@ html {
     background: #C5965F;
     border-radius: 10px;
     gap: 2em;
+    flex-direction: column;
 }
   
 .mochila {
@@ -103,6 +114,7 @@ html {
 .lista {
     margin: 0;
     padding: 0;
+    max-width: min-content;
 }
 
 .item {
