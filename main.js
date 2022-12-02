@@ -8,7 +8,6 @@ itens.forEach((elemento) =>{
   criaElemento(elemento)
 })
 
-
 //Evento para pausar o padrão de envio das informações do formulario e adicionar os dados de nome e quantidade que o usuario inserir, salvando no localStorage os itens ja adicionados.
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -22,9 +21,12 @@ form.addEventListener("submit", (event) => {
     "nome": nome.value,
     "quantidade": quantidade.value
   }
+
   if (existe){
       itemAtual.id = existe.id
       atualizaElemento(itemAtual)
+      itens[existe.id] = itemAtual // quando o item ja existir, ele irá sobrescrever a informação no localStorage
+
     }else{
       itemAtual.id = itens.length
 
@@ -56,6 +58,8 @@ function criaElemento(item) {
   lista.appendChild(novoItem)
 }
 
+
+//atualiza a quantidade do item, incrementando o id do data-id, para controlar se o item ja foi adicionado a lista
 function atualizaElemento (item){
 document.querySelector("[data-id='"+item.id+"']").innerHTML =item.quantidade
 }
