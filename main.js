@@ -1,49 +1,61 @@
+
 const form = document.querySelector("#novoItem"); 
 const lista = document.getElementById('lista')
-const itens = JSON.parse(localStorage.getItem("itens") || []); // Busca o histórico do localStore que estão dentro do array
+const itens = JSON.parse(localStorage.getItem("itens")) || []; // Itens que são adicionados com nome e quantidade
 
 
 itens.forEach((elemento) =>{
-  console.log(elemento.nome, elemento.quantidade)
+  criaElemento(elemento)
 })
 
+
+//Evento para pausar o padrão de envio das informações do formulario e adicionar os dados de nome e quantidade que o usuario inserir, salvando no localStorage os itens ja adicionados.
 form.addEventListener("submit", (event) => {
   event.preventDefault();
+ 
   const nome = event.target.elements["nome"];
   const quantidade = event.target.elements["quantidade"];
-  criaElemento(
-    nome.value,
-    quantidade.value,
-  );
+
+  const existe = itens.find(elemento => elemento.nome === nome.value)
+  
+  const itemAtual = {
+    "nome": nome.value,
+    "quantidade": quantidade.value
+  }
+  if (existe){
+      itemAtual.id = existe.id
+      atualizaElemento(itemAtual)
+    }else{
+      itemAtual.id = itens.length
+
+      criaElemento(itemAtual);
+      
+      itens.push(itemAtual)
+    }
+ 
+  localStorage.setItem("itens", JSON.stringify(itens))
+ 
+  
   nome.value = "";
   quantidade.value = "";
 });
 
-
-
-// função que adiciona um novo item a lista
-function criaElemento(nome, quantidade) {
+// função que adiciona um novo item a lista e salva no localStorage
+function criaElemento(item) {
 
   const novoItem = document.createElement("li");
   novoItem.classList.add("item");
 
   const quantidadeItem = document.createElement("strong");
-  quantidadeItem.innerHTML = quantidade;
+  quantidadeItem.innerHTML = item.quantidade;
+  quantidadeItem.dataset.id = item.id
 
   novoItem.appendChild(quantidadeItem);
-  novoItem.innerHTML += nome
+  novoItem.innerHTML += item.nome
 
   lista.appendChild(novoItem)
-
-  const itemAtual = {
-    "nome": nome,
-    "quantidade": quantidade
-  }
-
-      itens.push(itemAtual)
-
-  localStorage.setItem("itens", JSON.stringify(itens))
-  
 }
 
-
+function atualizaElemento (item){
+document.querySelector("[data-id='"+item.id+"']").innerHTML =item.quantidade
+}
